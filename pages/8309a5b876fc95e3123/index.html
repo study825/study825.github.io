@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>解析Laravel框架—路由处理 | 云海的博客</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="服务端技术博客,包括PHP,GoLang,MySQL,Docker,Redis,微服务等技术文章。">
+    <meta name="keywords" content="服务端技术博客,PHP,GoLang,MySQL,Docker,Redis,微服务">
+    <meta name="baidu-site-verification" content="code-29NGq3DxKH">
+    <meta name="theme-color" content="#11a8cd">
+    
+    <link rel="preload" href="/assets/css/0.styles.44f6a52f.css" as="style"><link rel="preload" href="/assets/js/app.a8ee54a5.js" as="script"><link rel="preload" href="/assets/js/2.9746fdea.js" as="script"><link rel="preload" href="/assets/js/9.95e17cbd.js" as="script"><link rel="prefetch" href="/assets/js/10.b2ad049a.js"><link rel="prefetch" href="/assets/js/11.bb87e5f2.js"><link rel="prefetch" href="/assets/js/12.0b4d7474.js"><link rel="prefetch" href="/assets/js/13.4269b487.js"><link rel="prefetch" href="/assets/js/14.53985f4b.js"><link rel="prefetch" href="/assets/js/15.fced7044.js"><link rel="prefetch" href="/assets/js/16.b154c63f.js"><link rel="prefetch" href="/assets/js/17.d940ba8a.js"><link rel="prefetch" href="/assets/js/18.e4c4ed76.js"><link rel="prefetch" href="/assets/js/19.079ef70b.js"><link rel="prefetch" href="/assets/js/20.56fa7610.js"><link rel="prefetch" href="/assets/js/21.c799fe30.js"><link rel="prefetch" href="/assets/js/22.ae2308f4.js"><link rel="prefetch" href="/assets/js/23.18407da3.js"><link rel="prefetch" href="/assets/js/24.5ebac264.js"><link rel="prefetch" href="/assets/js/25.8039c4c9.js"><link rel="prefetch" href="/assets/js/26.aefd35fc.js"><link rel="prefetch" href="/assets/js/27.fd9e235e.js"><link rel="prefetch" href="/assets/js/28.6e9a638d.js"><link rel="prefetch" href="/assets/js/29.3a21e0fa.js"><link rel="prefetch" href="/assets/js/3.67197aa6.js"><link rel="prefetch" href="/assets/js/30.44e86ea1.js"><link rel="prefetch" href="/assets/js/31.88490486.js"><link rel="prefetch" href="/assets/js/32.c56b28c6.js"><link rel="prefetch" href="/assets/js/33.f4ab3c6c.js"><link rel="prefetch" href="/assets/js/34.992dddcf.js"><link rel="prefetch" href="/assets/js/35.41a72c34.js"><link rel="prefetch" href="/assets/js/36.105fb962.js"><link rel="prefetch" href="/assets/js/37.7d86b3d7.js"><link rel="prefetch" href="/assets/js/38.7db1000c.js"><link rel="prefetch" href="/assets/js/39.bac46fcf.js"><link rel="prefetch" href="/assets/js/4.7dc4d1dc.js"><link rel="prefetch" href="/assets/js/40.d92ad0f2.js"><link rel="prefetch" href="/assets/js/41.b7e4d518.js"><link rel="prefetch" href="/assets/js/42.dc3905e2.js"><link rel="prefetch" href="/assets/js/43.e08369a8.js"><link rel="prefetch" href="/assets/js/44.79ec59e8.js"><link rel="prefetch" href="/assets/js/45.5a762d76.js"><link rel="prefetch" href="/assets/js/46.4101344d.js"><link rel="prefetch" href="/assets/js/47.08593b08.js"><link rel="prefetch" href="/assets/js/48.322b76ca.js"><link rel="prefetch" href="/assets/js/49.1e7b56d4.js"><link rel="prefetch" href="/assets/js/5.d7df19fe.js"><link rel="prefetch" href="/assets/js/50.f3f8e382.js"><link rel="prefetch" href="/assets/js/51.eba15507.js"><link rel="prefetch" href="/assets/js/52.6aa0d502.js"><link rel="prefetch" href="/assets/js/53.98f883fd.js"><link rel="prefetch" href="/assets/js/54.43265d8a.js"><link rel="prefetch" href="/assets/js/55.3bd71f1b.js"><link rel="prefetch" href="/assets/js/56.3e8e3285.js"><link rel="prefetch" href="/assets/js/57.80b20728.js"><link rel="prefetch" href="/assets/js/58.c410034c.js"><link rel="prefetch" href="/assets/js/59.f6d1e63a.js"><link rel="prefetch" href="/assets/js/6.387ccb4c.js"><link rel="prefetch" href="/assets/js/60.3a92eb9c.js"><link rel="prefetch" href="/assets/js/61.6a3f74ce.js"><link rel="prefetch" href="/assets/js/62.b64ff107.js"><link rel="prefetch" href="/assets/js/63.5fa20907.js"><link rel="prefetch" href="/assets/js/64.72941b6b.js"><link rel="prefetch" href="/assets/js/65.d6523677.js"><link rel="prefetch" href="/assets/js/66.0d4e244f.js"><link rel="prefetch" href="/assets/js/67.641d47be.js"><link rel="prefetch" href="/assets/js/68.75b321a8.js"><link rel="prefetch" href="/assets/js/69.c65b174a.js"><link rel="prefetch" href="/assets/js/7.0ffa4dd1.js"><link rel="prefetch" href="/assets/js/70.95ca024f.js"><link rel="prefetch" href="/assets/js/71.e4cc221f.js"><link rel="prefetch" href="/assets/js/72.0fe6c5ae.js"><link rel="prefetch" href="/assets/js/73.97ff0bc5.js"><link rel="prefetch" href="/assets/js/74.0fbf4cb3.js"><link rel="prefetch" href="/assets/js/75.58038c79.js"><link rel="prefetch" href="/assets/js/8.843b1848.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.44f6a52f.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">云海的博客</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Golang" class="dropdown-title"><a href="/pages/8f03ad02c6cad600d2c00a972a9bcce6/" class="link-title">Golang</a> <span class="title" style="display:none;">Golang</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8f03ad02c6cad600d2c00a972a9bcce6/" class="nav-link">接口</a></li><li class="dropdown-item"><!----> <a href="/pages/457fbb/" class="nav-link">数组</a></li><li class="dropdown-item"><!----> <a href="/pages/5c76b5/" class="nav-link">slice</a></li><li class="dropdown-item"><!----> <a href="/pages/8fc4c7ab4453d247e011738197b6136c/" class="nav-link">map</a></li><li class="dropdown-item"><!----> <a href="/pages/1c2657/" class="nav-link">指针</a></li><li class="dropdown-item"><!----> <a href="/pages/6169b9/" class="nav-link">反射</a></li><li class="dropdown-item"><!----> <a href="/pages/14d426/" class="nav-link">Context</a></li><li class="dropdown-item"><!----> <a href="/pages/95151a/" class="nav-link">sync.map</a></li><li class="dropdown-item"><!----> <a href="/pages/89b18e/" class="nav-link">锁</a></li><li class="dropdown-item"><!----> <a href="/pages/1d6684/" class="nav-link">类型和类型指针分析</a></li><li class="dropdown-item"><!----> <a href="/pages/4ee2bd/" class="nav-link">recover</a></li><li class="dropdown-item"><!----> <a href="/pages/80423c/" class="nav-link">从零实现RPC框架</a></li><li class="dropdown-item"><!----> <a href="/pages/3de6c3/" class="nav-link">make和new区别</a></li><li class="dropdown-item"><!----> <a href="/pages/56325e/" class="nav-link">channel</a></li><li class="dropdown-item"><!----> <a href="/pages/6bf5a8/" class="nav-link">sync.Once</a></li><li class="dropdown-item"><!----> <a href="/pages/0a6c0b/" class="nav-link">sync.Pool</a></li><li class="dropdown-item"><!----> <a href="/pages/d735a5/" class="nav-link">protobuf</a></li><li class="dropdown-item"><!----> <a href="/pages/80fc75/" class="nav-link">MongoDB pkg源码-findone</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JAVA" class="dropdown-title"><a href="/pages/73a4e2/" class="link-title">JAVA</a> <span class="title" style="display:none;">JAVA</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/73a4e2/" class="nav-link">MyBatis</a></li><li class="dropdown-item"><!----> <a href="/pages/329c9c/" class="nav-link">Maven</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="PHP" class="dropdown-title"><a href="/pages/8309a5b876fc95e3123/" aria-current="page" class="link-title router-link-exact-active router-link-active">PHP</a> <span class="title" style="display:none;">PHP</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3123/" aria-current="page" class="nav-link router-link-exact-active router-link-active">解析Laravel框架—路由处理</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Grpc" class="dropdown-title"><a href="/pages/8309a5b876f/" class="link-title">Grpc</a> <span class="title" style="display:none;">Grpc</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876f/" class="nav-link">PHP（客户端）与 Golang（服务端）使用grpc+protobuf 通信</a></li><li class="dropdown-item"><!----> <a href="/pages/bc0c03/" class="nav-link">JAVA（客户端）与 Golang（服务端） 使用grpc+protobuf通信</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><a href="/pages/8309a5b876fc95e3124/" class="link-title">微服务</a> <span class="title" style="display:none;">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3124/" class="nav-link">Docker使用笔记-常用命令</a></li><li class="dropdown-item"><!----> <a href="/pages/5352bd/" class="nav-link">Docker使用笔记-容器间通讯</a></li><li class="dropdown-item"><!----> <a href="/pages/22971e/" class="nav-link">Docker使用笔记-搭建Redis集群</a></li><li class="dropdown-item"><!----> <a href="/pages/425b20/" class="nav-link">Docker使用笔记-镜像多阶段构建</a></li><li class="dropdown-item"><!----> <a href="/pages/c3645d/" class="nav-link">Kubernetes部署golang服务</a></li><li class="dropdown-item"><!----> <a href="/pages/3e8bf0/" class="nav-link">Linux常用命令</a></li><li class="dropdown-item"><!----> <a href="/pages/4ada6d/" class="nav-link">Docker安装Prometheus与Grafana</a></li><li class="dropdown-item"><!----> <a href="/pages/e24bcf/" class="nav-link">Protobuf</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="网络" class="dropdown-title"><a href="/pages/6e85db/" class="link-title">网络</a> <span class="title" style="display:none;">网络</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/6e85db/" class="nav-link">TCP抓包</a></li><li class="dropdown-item"><!----> <a href="/pages/d9d328/" class="nav-link">概述-《TCP/IP详解》读书笔记</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="MySQL" class="dropdown-title"><a href="/pages/4fd1b2/" class="link-title">MySQL</a> <span class="title" style="display:none;">MySQL</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/4fd1b2/" class="nav-link">索引</a></li><li class="dropdown-item"><!----> <a href="/pages/b8ed02/" class="nav-link">事务隔离级别</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Redis" class="dropdown-title"><a href="/pages/d31321/" class="link-title">Redis</a> <span class="title" style="display:none;">Redis</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/d31321/" class="nav-link">常识</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="每日一题(1)" class="dropdown-title"><a href="/pages/87ebf8/" class="link-title">每日一题(1)</a> <span class="title" style="display:none;">每日一题(1)</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/87ebf8/" class="nav-link">每日一题(1)</a></li><li class="dropdown-item"><!----> <a href="/pages/d238dd/" class="nav-link">每日一题(2)</a></li><li class="dropdown-item"><!----> <a href="/pages/339b1b/" class="nav-link">每日一题(3)</a></li><li class="dropdown-item"><!----> <a href="/pages/e163f1/" class="nav-link">每日一题(4)</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div> <a href="https://github.com/study825" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar-hover-trigger"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="https://avatars.githubusercontent.com/u/25599512?s=400&amp;u=3ead57ca8c8216c389694364377b10f011dee419&amp;v=4"> <div class="blogger-info"><h3>云海</h3> <span>服务端研发</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Golang" class="dropdown-title"><a href="/pages/8f03ad02c6cad600d2c00a972a9bcce6/" class="link-title">Golang</a> <span class="title" style="display:none;">Golang</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8f03ad02c6cad600d2c00a972a9bcce6/" class="nav-link">接口</a></li><li class="dropdown-item"><!----> <a href="/pages/457fbb/" class="nav-link">数组</a></li><li class="dropdown-item"><!----> <a href="/pages/5c76b5/" class="nav-link">slice</a></li><li class="dropdown-item"><!----> <a href="/pages/8fc4c7ab4453d247e011738197b6136c/" class="nav-link">map</a></li><li class="dropdown-item"><!----> <a href="/pages/1c2657/" class="nav-link">指针</a></li><li class="dropdown-item"><!----> <a href="/pages/6169b9/" class="nav-link">反射</a></li><li class="dropdown-item"><!----> <a href="/pages/14d426/" class="nav-link">Context</a></li><li class="dropdown-item"><!----> <a href="/pages/95151a/" class="nav-link">sync.map</a></li><li class="dropdown-item"><!----> <a href="/pages/89b18e/" class="nav-link">锁</a></li><li class="dropdown-item"><!----> <a href="/pages/1d6684/" class="nav-link">类型和类型指针分析</a></li><li class="dropdown-item"><!----> <a href="/pages/4ee2bd/" class="nav-link">recover</a></li><li class="dropdown-item"><!----> <a href="/pages/80423c/" class="nav-link">从零实现RPC框架</a></li><li class="dropdown-item"><!----> <a href="/pages/3de6c3/" class="nav-link">make和new区别</a></li><li class="dropdown-item"><!----> <a href="/pages/56325e/" class="nav-link">channel</a></li><li class="dropdown-item"><!----> <a href="/pages/6bf5a8/" class="nav-link">sync.Once</a></li><li class="dropdown-item"><!----> <a href="/pages/0a6c0b/" class="nav-link">sync.Pool</a></li><li class="dropdown-item"><!----> <a href="/pages/d735a5/" class="nav-link">protobuf</a></li><li class="dropdown-item"><!----> <a href="/pages/80fc75/" class="nav-link">MongoDB pkg源码-findone</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="JAVA" class="dropdown-title"><a href="/pages/73a4e2/" class="link-title">JAVA</a> <span class="title" style="display:none;">JAVA</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/73a4e2/" class="nav-link">MyBatis</a></li><li class="dropdown-item"><!----> <a href="/pages/329c9c/" class="nav-link">Maven</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="PHP" class="dropdown-title"><a href="/pages/8309a5b876fc95e3123/" aria-current="page" class="link-title router-link-exact-active router-link-active">PHP</a> <span class="title" style="display:none;">PHP</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3123/" aria-current="page" class="nav-link router-link-exact-active router-link-active">解析Laravel框架—路由处理</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Grpc" class="dropdown-title"><a href="/pages/8309a5b876f/" class="link-title">Grpc</a> <span class="title" style="display:none;">Grpc</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876f/" class="nav-link">PHP（客户端）与 Golang（服务端）使用grpc+protobuf 通信</a></li><li class="dropdown-item"><!----> <a href="/pages/bc0c03/" class="nav-link">JAVA（客户端）与 Golang（服务端） 使用grpc+protobuf通信</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="微服务" class="dropdown-title"><a href="/pages/8309a5b876fc95e3124/" class="link-title">微服务</a> <span class="title" style="display:none;">微服务</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/8309a5b876fc95e3124/" class="nav-link">Docker使用笔记-常用命令</a></li><li class="dropdown-item"><!----> <a href="/pages/5352bd/" class="nav-link">Docker使用笔记-容器间通讯</a></li><li class="dropdown-item"><!----> <a href="/pages/22971e/" class="nav-link">Docker使用笔记-搭建Redis集群</a></li><li class="dropdown-item"><!----> <a href="/pages/425b20/" class="nav-link">Docker使用笔记-镜像多阶段构建</a></li><li class="dropdown-item"><!----> <a href="/pages/c3645d/" class="nav-link">Kubernetes部署golang服务</a></li><li class="dropdown-item"><!----> <a href="/pages/3e8bf0/" class="nav-link">Linux常用命令</a></li><li class="dropdown-item"><!----> <a href="/pages/4ada6d/" class="nav-link">Docker安装Prometheus与Grafana</a></li><li class="dropdown-item"><!----> <a href="/pages/e24bcf/" class="nav-link">Protobuf</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="网络" class="dropdown-title"><a href="/pages/6e85db/" class="link-title">网络</a> <span class="title" style="display:none;">网络</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/6e85db/" class="nav-link">TCP抓包</a></li><li class="dropdown-item"><!----> <a href="/pages/d9d328/" class="nav-link">概述-《TCP/IP详解》读书笔记</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="MySQL" class="dropdown-title"><a href="/pages/4fd1b2/" class="link-title">MySQL</a> <span class="title" style="display:none;">MySQL</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/4fd1b2/" class="nav-link">索引</a></li><li class="dropdown-item"><!----> <a href="/pages/b8ed02/" class="nav-link">事务隔离级别</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Redis" class="dropdown-title"><a href="/pages/d31321/" class="link-title">Redis</a> <span class="title" style="display:none;">Redis</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/d31321/" class="nav-link">常识</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="每日一题(1)" class="dropdown-title"><a href="/pages/87ebf8/" class="link-title">每日一题(1)</a> <span class="title" style="display:none;">每日一题(1)</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/pages/87ebf8/" class="nav-link">每日一题(1)</a></li><li class="dropdown-item"><!----> <a href="/pages/d238dd/" class="nav-link">每日一题(2)</a></li><li class="dropdown-item"><!----> <a href="/pages/339b1b/" class="nav-link">每日一题(3)</a></li><li class="dropdown-item"><!----> <a href="/pages/e163f1/" class="nav-link">每日一题(4)</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">关于</a></div> <a href="https://github.com/study825" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/pages/8309a5b876fc95e3123/" aria-current="page" class="active sidebar-link">解析Laravel框架—路由处理</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/pages/6d9f2b/" class="sidebar-link">UE5 m1编译</a></li></ul> </aside> <div><main class="page"><div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-1baff76c><div class="articleInfo" data-v-1baff76c><ul class="breadcrumbs" data-v-1baff76c><li data-v-1baff76c><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-1baff76c></a></li> <li data-v-1baff76c><a href="/categories/?category=%E5%85%B6%E5%AE%83" title="分类" data-v-1baff76c>其它</a></li></ul> <div class="info" data-v-1baff76c><div title="作者" class="author iconfont icon-touxiang" data-v-1baff76c><a href="https://github.com/study825" target="_blank" title="作者" class="beLink" data-v-1baff76c>云海</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-1baff76c><a href="javascript:;" data-v-1baff76c>2017-03-29</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-title">目录</div> <div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABH1JREFUSA3tVl1oHFUUPmdmd2ltklqbpJDiNnXFmgbFktho7YMPNiJSSZM0+CAYSkUELVhM6YuwIPpgoOKDqOBDC0XE2CQoNtQXBUFTTcCi+Wlh1V2TQExsUzcltd3M9Tt3ZjZzZ2fT+OJTL8yeM+eee757fmeJbq//KQL8X3DUSFOcfr7cRsRtxNQMWueeVzOkaITIGqQHNg5y8+jNW9ldM7A6nTpAjuolUikAwq7CE3WcM2RRDz+XGVgN3FptU/aUSlvq9Pa3iZ1+sgAqJyyAFqkipd9dqiwHF3P65YycLWc/6sqGrvoEoIp6DOFaX5h6+dnfjkWprwqsPk0dUGq5vySwDImC10KxFHgGL1SWoc92O3eVht09qdXNH11I2SsTsJYqMWzihqGMi+A+Garf3BAuuLI5oGlULyNfyB/HYNujwktOfRrMr5t77NmevqaUopx0grnKAyvVpmwUDB4x6FPXuGvYLTDwWsejwgtgkYKPqRJg8SV6xaiZ3ZTppGneS4yfH5/66fZSDHv+QZci/+h5c5UHtpy67JUqGppM0sh0Nc1dW6/N1W5Yoqat8/TU/VnadmdeW2PLLSyh0cvxBs3KbqTmwYPpxN4do/mzE8nEpvX/UMu2Wbp74zUAK5q6WkHns7V0eWkdPbPzd3rxkTGybadYySumVzhcaJFbs5UrEkQ/+CK8gF5dnh/6ciIZ73gwQ927L1IitoxKLXYP3SjYdOrHHfTZhRRlFyrorafPk20B3HPD1y2G3qKZME5Jcf3t/HUC13/8tSd++vqFveMUTwAUxSUFI1QekR1+bIze3D9MF2aq6cPvG72CgnldWCFqyRw3lwH8ZMerjTD9ElRO7Gv44wNpC90aASqGfVlz/Rx17srQ57/UU26hkhQqUB7dBR71WmzQhHUnblGmVOEw0jhbV1n9OlXUDCIRGaNV5Jp43N516fN7JmnTHdfp7Hgy0luO4aMhtkLL8Bi3bUWYvzh5Mn1dTxrL6QmGuRhGL/TiTTxRoEdTszSaq9GR0NGA3KdkOz3hqSV3MIDhQ5IVX/Ivx3umBti2es2h4eZby7x8br1rkf7Mo90AqC8aQ3sJeNzqFRu+vSANAQe3PL7l0HGOAdwDCeZYvNKeoZp1Qfs6Aipndh86HmFRi0LAnEO47wsqM6cdfjh3jBPUzhZy7nvlUfFsamED1VQt6aISHVymXZ/B2aCtIG8AI8xfobj2d3en1wWVhOeHELKmLQ1s211s88comkv4UCwWyF787mJdYXtNfhKAXVqnKTq8QZvGAGGOfaTo5pGZ/PwbUCr5+DPr/1J92JNHr9aOl/F3iI5+O1nfybsGxoimvZ3ViWSluDITw3P37mypheDIPY0tw7+O/5ApbkYw+zpfaUVu32Pi98+defdUhEpZkRFq0aqyNh9FuL9hpYbEm6iwi0z2REd09ZmyENEbuhjDWzKvZXTqKYaBIr3tt5kuPtQBZFvEUwHt60vfCNu41XsksH9Ij1BMMz1Y0OOunHNShFIP5868g5zeXmuLwL9T4b6Q2+KejgAAAABJRU5ErkJggg==">解析Laravel框架—路由处理<!----></h1> <!----> <div class="theme-vdoing-content content__default"><h1 id="解析laravel框架-路由处理"><a href="#解析laravel框架-路由处理" class="header-anchor">#</a> 解析Laravel框架—路由处理</h1> <h3 id="介绍"><a href="#介绍" class="header-anchor">#</a> 介绍</h3> <p>我很好奇,Laravel框架是如何解析路由（routes/web.php）文件。为什么，如下代码，就可以执行ExampleController控制器中的add方法。于是乎，我就去一层层查看框架代码，揭下它神秘的面纱。</p> <p>注：因为框架文件代码量过大，本文所贴代码，皆已删减。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>$router-&gt;get('/', 'ExampleController@add');
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="准备"><a href="#准备" class="header-anchor">#</a> 准备</h3> <ul><li>Lumen（精简版的Laravel框架）,选择的版本是Lumen8.2.3。</li> <li>好用的ide工具，选择的是PhpStorm。</li> <li>本地PHP版本，选择的是7.2.30。</li></ul> <h3 id="正文"><a href="#正文" class="header-anchor">#</a> 正文</h3> <p>查看入口文件<strong>index.php</strong>，该文件位于<strong>public</strong>文件夹下。我们先分析第一行，require部分。</p> <div class="language-php line-numbers-mode"><pre class="language-php"><code><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+
+<span class="token variable">$app</span> <span class="token operator">=</span> <span class="token keyword">require</span> <span class="token constant">__DIR__</span><span class="token operator">.</span><span class="token string single-quoted-string">'/../bootstrap/app.php'</span><span class="token punctuation">;</span>
+
+<span class="token variable">$app</span><span class="token operator">-&gt;</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</span></code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><p>一.Require部分</p> <p>require主要就是加载bootstrap文件夹下的app.php文件。</p> <p>2.我把app.php文件中的代码贴到了下面。为了便于读者浏览，我在代码中写入了注释。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;?php
+
+
+// 加载vendor文件夹中的扩展包。
+require_once __DIR__.'/../vendor/autoload.php';
+
+// 加载env变量
+(new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
+    dirname(__DIR__)
+))-&gt;bootstrap();
+
+// 设置默认的时区
+date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
+
+/*
+|--------------------------------------------------------------------------
+| Create The Application
+|--------------------------------------------------------------------------
+|
+| Here we will load the environment and create the application instance
+| that serves as the central piece of this framework. We'll use this
+| application as an &quot;IoC&quot; container and router for this framework.
+| 
+| 在这里，我们将加载环境变量（env文件）并创建应用程序实例，作为这个框架的中心。 
+| 
+*/
+
+
+// Application代码
+$app = new Laravel\Lumen\Application(
+    dirname(__DIR__)
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| Load The Application Routes
+|--------------------------------------------------------------------------
+|
+| Next we will include the routes file so that they can all be added to
+| the application. This will provide all of the URLs the application
+| can respond to, as well as the controllers that may handle them.
+|
+| 我们将加载路由文件。这包括所有的请求地址，看看我们如何更好的处理它们。
+*/
+
+// 在本文件的上半部分，我们已创建一个app实例。这里就是将实例与路由文件绑定到一起。
+$app-&gt;router-&gt;group([
+    'namespace' =&gt; 'App\Http\Controllers',
+], function ($router) {
+    require __DIR__.'/../routes/web.php';
+});
+
+return $app;
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br></div></div><p>3.我们可以看到，$app实例，是由 new Application产生。然后  $app调用router属性的group方法,由此将路由文件，加载到应用中。查看下Application类。</p> <p>通过Application类文件，我们可以看到构造函数中调用了bootstrapRouter方法。此方法中，又包含了对router属性的赋值。</p> <p>文件位置：vendor/laravel/lumen-framework/src/Application.php</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;?php
+
+namespace Laravel\Lumen;
+
+use Illuminate\Container\Container;
+use Laravel\Lumen\Routing\Router;
+
+class Application extends Container
+{
+    // 加载RoutesRequests trait文件，该文件是用于处理路由。着重讲解。
+    use Concerns\RoutesRequests;
+
+    /**
+     * The Router instance.
+     *
+     * @var \Laravel\Lumen\Routing\Router
+     */
+    public $router;
+    
+    /**
+     * Create a new Lumen application instance.
+     * 创建app实例，如下构造函数。
+     *  
+     * @param  string|null  $basePath
+     * @return void
+     */
+    public function __construct($basePath = null)
+    {
+        // 路由部分。
+        $this-&gt;bootstrapRouter();
+    }
+
+    /**
+     * Bootstrap the router instance.
+     * 为router属性赋值。
+     *
+     * @return void
+     */
+    public function bootstrapRouter()
+    {
+        $this-&gt;router = new Router($this);
+    }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br></div></div><p>4.接下来看看，Router类中的group方法，又起到了什么作用。
+Router类文件位置：vendor/laravel/lumen-framework/src/Routing/Router.php</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>&lt;?php
+
+namespace Laravel\Lumen\Routing;
+
+use Illuminate\Support\Arr;
+
+class Router
+{
+    /**
+     * The application instance.
+     *
+     * @var \Laravel\Lumen\Application
+     */
+    public $app;
+
+
+    /**
+     * Router constructor.
+     *
+     * @param  \Laravel\Lumen\Application  $app
+     */
+    public function __construct($app)
+    {
+        $this-&gt;app = $app;
+    }
+
+    /**
+     * Register a set of routes with a set of shared attributes.
+     *
+     * @param  array  $attributes
+     * @param  \Closure  $callback
+     * @return void
+     */
+    public function group(array $attributes, \Closure $callback)
+    {
+        if (isset($attributes['middleware']) &amp;&amp; is_string($attributes['middleware'])) {
+            $attributes['middleware'] = explode('|', $attributes['middleware']);
+        }
+
+        $this-&gt;updateGroupStack($attributes);
+
+        call_user_func($callback, $this);
+
+        array_pop($this-&gt;groupStack);
+    }
+
+    
+    /**
+     * Update the group stack with the given attributes.
+     * 整合传入的参数。存储到groupStack数组。
+     *
+     * @param  array  $attributes
+     * @return void
+     */
+    protected function updateGroupStack(array $attributes)
+    {
+        if (! empty($this-&gt;groupStack)) {
+            $attributes = $this-&gt;mergeWithLastGroup($attributes);
+        }
+
+        $this-&gt;groupStack[] = $attributes;
+    }
+
+    /**
+     * Add a route to the collection.
+     *
+     * @param  array|string  $method
+     * @param  string  $uri
+     * @param  mixed  $action
+     * @return void
+     */
+    public function addRoute($method, $uri, $action)
+    {
+        $action = $this-&gt;parseAction($action);
+
+        $attributes = null;
+
+        if ($this-&gt;hasGroupStack()) {
+            $attributes = $this-&gt;mergeWithLastGroup([]);
+        }
+
+        if (isset($attributes) &amp;&amp; is_array($attributes)) {
+            if (isset($attributes['prefix'])) {
+                $uri = trim($attributes['prefix'], '/').'/'.trim($uri, '/');
+            }
+
+            if (isset($attributes['suffix'])) {
+                $uri = trim($uri, '/').rtrim($attributes['suffix'], '/');
+            }
+
+            $action = $this-&gt;mergeGroupAttributes($action, $attributes);
+        }
+
+        $uri = '/'.trim($uri, '/');
+
+        if (isset($action['as'])) {
+            $this-&gt;namedRoutes[$action['as']] = $uri;
+        }
+
+        if (is_array($method)) {
+            foreach ($method as $verb) {
+                $this-&gt;routes[$verb.$uri] = ['method' =&gt; $verb, 'uri' =&gt; $uri, 'action' =&gt; $action];
+            }
+        } else {
+            $this-&gt;routes[$method.$uri] = ['method' =&gt; $method, 'uri' =&gt; $uri, 'action' =&gt; $action];
+        }
+    }
+
+    /**
+     * Register a route with the application.
+     *
+     * @param  string  $uri
+     * @param  mixed  $action
+     * @return $this
+     */
+    public function get($uri, $action)
+    {
+        $this-&gt;addRoute('GET', $uri, $action);
+
+        return $this;
+    }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br></div></div><p>5.我把group方法，单独拿出来讲解。这个方法，有两个入参，一个是数组，另一个是回调方法。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public function group(array $attributes, \Closure $callback)
+{
+    call_user_func($callback, $this);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><p>在app.php文件中，咱们填入的参数如下：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>app.php文件。group方法的调用参数。
+
+[
+    'namespace' =&gt; 'App\Http\Controllers',
+], function ($router) {
+    require __DIR__.'/../routes/web.php';
+    // 实际加载后的代码，如下所示：
+    // $router-&gt;get('/', 'ExampleController@add');
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><p>6.使用call_user_func执行回调方法，当前路由为get请求，于是调用Router类中的get方法。</p> <p>get方法中，又进行addRoute操作，addRoute就是将路由存入routes属性中。加载操作，到这里，就结束了。下一步，看看如何执行。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public function get($uri, $action)
+{
+    $this-&gt;addRoute('GET', $uri, $action);
+
+    return $this;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>public function addRoute($method, $uri, $action)
+{
+    $uri = '/'.trim($uri, '/');
+
+    if (isset($action['as'])) {
+        $this-&gt;namedRoutes[$action['as']] = $uri;
+    }
+
+    if (is_array($method)) {
+        foreach ($method as $verb) {
+            $this-&gt;routes[$verb.$uri] = ['method' =&gt; $verb, 'uri' =&gt; $uri, 'action' =&gt; $action];
+        }
+    } else {
+        $this-&gt;routes[$method.$uri] = ['method' =&gt; $method, 'uri' =&gt; $uri, 'action' =&gt; $action];
+    }
+}
+
+
+// 存入后的格式
+$this-&gt;routes[$method.$uri] = 
+array(1) {
+    [&quot;GET/&quot;]=&gt;array(3) {
+                [&quot;method&quot;]=&gt; string(3) &quot;GET&quot;
+                [&quot;uri&quot;]=&gt; string(1) &quot;/&quot;
+                [&quot;action&quot;]=&gt; array(1) {
+                            [&quot;uses&quot;]=&gt; string(42) &quot;App\Http\Controllers\ExampleController@add&quot;
+                }
+    }
+}
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><p>二.Run部分</p> <p>1.接下来，分析run部分。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>$app-&gt;run();
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>$app变量是Application实例，于是去Application.php,查找run方法。最后在该文件引入的trait 类， Concerns\RoutesRequests 文件中找到。</p> <p>RoutesRequests文件位置：vendor/laravel/lumen-framework/src/Concerns/RoutesRequest.php</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public function run($request = null)
+{
+    // 请求处理
+    $response = $this-&gt;dispatch($request);
+
+    // 返回值
+    if ($response instanceof SymfonyResponse) {
+        $response-&gt;send();
+    } else {
+        echo (string) $response;
+    }
+
+    if (count($this-&gt;middleware) &gt; 0) {
+        $this-&gt;callTerminableMiddleware($response);
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div><p>2.请求处理部分是在dispatch这个方法中。<strong>核心代码</strong>。
+以下，就是我删减，合并后的代码。这样看起来，就清晰明了。</p> <p>首先是通过routes，验证该路由是否存在。存在，就进行下一步的处理，拆分controller与method名称。使用make实例化controller, 去验证method是否存在。</p> <p>$instance 是make实例化，核心就是make。 make里面使用了反射类。</p> <p>创建反射，之后从给出的参数创建一个新的类实例。执行[$instance, 'add'] () 就可以调用ExampleController中的add方法。这样就达到了，执行控制器方法的效果。</p> <p><strong>$reflector = new ReflectionClass($concrete);</strong></p> <p><strong>$reflector-&gt;newInstanceArgs($instances);</strong></p> <div class="language- line-numbers-mode"><pre class="language-text"><code>    public function dispatch($request = null)
+    {
+        // 丢到一个通道去执行操作
+        return $this-&gt;sendThroughPipeline($this-&gt;middleware, function ($request) use ($method, $pathInfo) {
+            $this-&gt;instance(Request::class, $request);
+
+            // 判断路由是否存在，存在继续执行
+            if (isset($this-&gt;router-&gt;getRoutes()[$method.$pathInfo])) {
+                  return $this-&gt;prepareResponse($this-&gt;callControllerAction($routeInfo));
+            }
+        });
+        
+    }
+    
+    // 处理路由,将路由中的controller与method 拆开
+    protected function callControllerAction($routeInfo)
+    {
+        $uses = $routeInfo[1]['uses'];
+
+        if (is_string($uses) &amp;&amp; ! Str::contains($uses, '@')) {
+            $uses .= '@__invoke';
+        }
+
+        [$controller, $method] = explode('@', $uses);
+
+        // $instance赋值
+        if (! method_exists($instance = $this-&gt;make($controller), $method)) {
+            throw new NotFoundHttpException;
+        }
+
+        return $this-&gt;callControllerCallable($instance, $method, $routeInfo);
+        
+    }
+    
+    
+    protected function callControllerCallable($instance ,$method, $routeInfo)
+    {
+        return $this-&gt;prepareResponse(
+            $this-&gt;call([$instance, $method], $routeInfo[2])
+        );
+    }
+    
+    public function call($callback, array $parameters = [], $defaultMethod = null)
+    {
+        return $callback();
+    }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div><p>3.如下，就是针对路由，产生的反射类及类实例。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>$router-&gt;get('/', 'ExampleController@add');
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>$reflection = new \ReflectionClass('ExampleController');
+$instance = $reflection-&gt;newInstanceArgs();
+[$instance, 'add']()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h3 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h3> <p>Laravel 框架很多地方都是用到了反射机制，这篇文章只是分析了一小部分。多分析框架代码，还是有好处的。</p></div></div> <!----> <div class="page-edit"><!----> <!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2023/10/07</span></div></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><!----> <a href="/pages/6d9f2b/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">UE5 m1编译</div></a></div> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/pages/6d9f2b/">UE5 m1编译</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/befead/"><div>
+            函数
+            <!----></div></a> <span class="date">04-11</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/b439dd/"><div>
+            面试题
+            <!----></div></a> <span class="date">04-11</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/faa800/"><div>
+            EFK日志收集系统单机版
+            <!----></div></a> <span class="date">08-18</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div></main></div> <div class="footer"><div class="icons"><a href="mailto:calmli@gmail.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/study825" title="GitHub" target="_blank" class="iconfont icon-github"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2022-2025
+    <span>Evan Xu | <a href="https://github.com/xugaoyi/vuepress-theme-vdoing/blob/master/LICENSE" target="_blank">MIT License</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">
+          跟随系统
+        </li><li class="iconfont icon-rijianmoshi">
+          浅色模式
+        </li><li class="iconfont icon-yejianmoshi">
+          深色模式
+        </li><li class="iconfont icon-yuedu">
+          阅读模式
+        </li></ul></div></div> <!----> <!----> <!----></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.a8ee54a5.js" defer></script><script src="/assets/js/2.9746fdea.js" defer></script><script src="/assets/js/9.95e17cbd.js" defer></script>
+  </body>
+</html>
